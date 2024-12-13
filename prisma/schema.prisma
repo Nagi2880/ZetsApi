@@ -20,17 +20,27 @@ enum Role{
 }
 
 model Profile {
-  id     Int        @default(autoincrement())
-  uuid   String     @id @default(uuid()) @db.Uuid()
-  bio    String?
-  user   User       @relation(fields: [userId], references: [uuid])
-  userId String     @unique @db.Uuid()
+  id             Int              @default(autoincrement())
+  uuid           String           @id @default(uuid()) @db.Uuid()
+  bio            String?
+  user           User             @relation(fields: [userId], references: [uuid])
+  userId         String           @unique @db.Uuid()
+  products       Product[]        @relation("Profileproducts")
 }
 model User {
-  id      Int      @default(autoincrement())
-  uuid    String   @id @default(uuid()) @db.Uuid() 
-  email   String   @unique
-  name    String?
-  profile Profile?
-  rol     Role  @default(USER)  // 
+  id             Int              @default(autoincrement())
+  uuid           String           @id @default(uuid()) @db.Uuid() 
+  email          String           @unique
+  name           String?
+  profile        Profile?
+  rol            Role             @default(USER) 
+}
+model Product{
+  uuid           String           @id @default(uuid()) @db.Uuid()
+  name           String
+  description    String?
+  price          Int
+  stock          Int
+  sellerId       String           @db.Uuid() //UUID Type      
+  seller         Profile          @relation("Profileproducts",fields:[sellerId],references: [uuid])
 }
