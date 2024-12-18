@@ -37,10 +37,9 @@ model User {
 }
 model Product{
   uuid           String           @id @default(uuid()) @db.Uuid()
-  name           String
   description    String?
   price          Int
   stock          Int
-  sellerId       String           @db.Uuid() //UUID Type      
+  sellerId       String           @db.Uuid()       
   seller         Profile          @relation("Profileproducts",fields:[sellerId],references: [uuid])
 }
